@@ -187,25 +187,28 @@ void show_avalaible_routes(){
 }
 
 int show_initial_display(){
-    printf("Please Choose one of the following: \n");
-    printf("Type 1: To see available routes\n");
-    printf("Type 2: To book tickets\n");
-    printf("Type 3: To see your reservations\n");
-    printf("Type 4: To Terminate the program\n");
-    char temp[1];
-
-    printf("You Choose: ");
-    scanf("%s", temp);
-    printf("\n");
-    int choice = atoi(temp);
-    if(choice < 1 || choice > 4){
-        printf("Invalid Choice, Please Choose again.\n\n");\
-        clear_buffer();
-        show_initial_display();
-    }else{
-
-        return choice;
+    int choice = -1;
+    while(true){
+        printf("Please Choose one of the following: \n");
+        printf("Type 1: To see available routes\n");
+        printf("Type 2: To book tickets\n");
+        printf("Type 3: To see your reservations\n");
+        printf("Type 4: To Terminate the program\n");
+        char temp[1];
+    
+        printf("You Choose: ");
+        scanf("%s", temp);
+        printf("\n");
+        choice = atoi(temp);
+        if(choice < 1 || choice > 4){
+            printf("Invalid Choice, Please Choose again.\n\n");\
+            clear_buffer();
+        }else{
+    
+            break;
+        }
     }
+    return choice;
 
 }
 
@@ -261,7 +264,7 @@ int* load_data(char user_route[2][512]){
     if(!valid_train_num){
         return NULL;
     }else{
-        valid_train_num = realloc(valid_train_num, sizeof(int));
+        valid_train_num = realloc(valid_train_num, (i + 1) * sizeof(int));
         valid_train_num[i] = -1; 
         return valid_train_num;
     }
