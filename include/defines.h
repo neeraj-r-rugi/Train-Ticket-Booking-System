@@ -6,6 +6,7 @@
 #include<stdbool.h>
 #include<string.h>
 #include <time.h>
+#include<ctype.h>
 
 #define DATA_PATH ".\\data\\train_data.csv"
 #define BOOKING_DATA_PATH ".\\data\\user_bookings.csv"

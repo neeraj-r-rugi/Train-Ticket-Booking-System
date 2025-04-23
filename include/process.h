@@ -11,6 +11,9 @@ void clear_buffer();
 int get_train_num();
 int* begin_booking(int train_num);
 int load_price(int train_num);
-int finalize_booking(struct user_booking_information*);
+int finalize_booking(const struct user_booking_information*);
+int generate_booking_id();
+void show_user_reservations();
+void to_upper(char*);
 
 #endif

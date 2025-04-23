@@ -3,14 +3,79 @@
 
 //#define MAX_FIELD_LEN 100
 
+void to_upper(char str[512]){
+    for (int i = 0; str[i] != '\0'; i++) {
+        str[i] = toupper(str[i]);  // Converts each character to uppercase
+    }
+}
 
-int finalize_booking(struct user_booking_information* info){
+void show_user_reservations(){
+    FILE *fp = fopen(BOOKING_DATA_PATH, "r");
+    char line[MAX_LINE];
+    printf("Your Bookings are: \n\n");
+    while (fgets(line, MAX_LINE,fp))
+    {
+        if(!strcmp(line, "\n")){
+            printf("No Bookings yet!\n");
+            break;
+        }
+        char *token = strtok(line, ",");
+
+        printf("Booking id: %d\n", atoi(token));
+        token = strtok(NULL, ",");
+
+        printf("Source: %s\n", token);
+        token = strtok(NULL, ",");
+
+        printf("Destination: %s\n", token);
+        token = strtok(NULL, ",");
+
+        printf("Train No.: %d\n", atoi(token));
+        token = strtok(NULL, ",");
+
+        printf("Number of Passangers: %d\n", atoi(token));
+        token = strtok(NULL, ",");
+
+        printf("Total Price: %d\n", atoi(token));
+        token = strtok(NULL, ",");
+        printf("-----------------------------------------------\n\n");
+    }
+    printf("Press Enter to continue...\n");
+    clear_buffer();
+    getchar();
+    fclose(fp);
+}
+
+
+int generate_booking_id(){
+    srand(time(NULL));
+    return (rand() % 90000 + 10000);
+}
+
+int finalize_booking(const struct user_booking_information* info){
     FILE *fp = fopen(BOOKING_DATA_PATH, "a");
     if (fp == NULL) {
         printf("Failed to Book Ticket!\n");
         kill_program();
     }
-    fprintf(fp, *info.)
+    int booking_id = generate_booking_id();
+    char temp[512];
+    char source[512];
+    char destination[512];
+    
+    strcpy(temp, info->source);
+    to_upper(temp);
+    strcpy(source, temp);
+
+    //printf("%s\n", temp);
+    strcpy(temp, info->destination);
+    to_upper(temp);
+    strcpy(destination, temp);
+
+    //printf("--%d\n", info->train_num);
+    fprintf(fp, "%d,%s,%s,%d,%d,%d,\n", booking_id,source, destination, info->train_num, info->no_of_passangers, info->price);
+    fclose(fp);
+    return booking_id;
 
 }
 
@@ -37,23 +102,23 @@ int load_price(int train_num){
 int* begin_booking(int train_num){
     
     printf("NOTE: For security reasons you can only book a maximum of 6 tickets per booking\n");
-    int no_of_passangers;
+    int no_of_passangers = 0;
     int* p = (int*)malloc(2 * sizeof(int));
     while(true){
         printf("Please enter the number of travellers you are booking for or -1 if you want to cancel booking\n");
+        printf("Your Choice: ");
         scanf("%d", &no_of_passangers);
+        printf("\n");
+        if(no_of_passangers == -1){
+            printf("Cancelling booking\n");
+            kill_program();
+        }
         if(no_of_passangers <= MAX_TICKET_LIMIT && no_of_passangers >= 1){
             //printf("YES\n");
             break;
         
         }else{
             printf("Inavalid no. of Passangers please try again: \n");
-            printf("Please enter the number of travellers you are booking for or -1 if you want to stop booking\n");
-            scanf("%d", &no_of_passangers);
-            if(no_of_passangers == -1){
-                printf("Cancelling booking\n");
-                kill_program();
-            }
         }
     }
     //printf("--YES\n");
@@ -106,12 +171,18 @@ void show_avalaible_routes(){
     while (fgets(line, MAX_LINE,fp))
     {
         char *token = strtok(line, ",");
+        printf("No.: %s|| ", token);
         token = strtok(NULL, ",");
-        printf("%s", token);
+        printf("From: %s", token);
         token = strtok(NULL, ",");
-        printf("    ------------>   ");
-        printf("%s\n", token);
+        printf(" ------------> ");
+        printf("To: %s ", token);
+        token = strtok(NULL,",");
+        printf("Price: %s\n", token);
     }
+    printf("Press any key to continue...\n");
+    clear_buffer();
+    getchar();
     fclose(fp);
 }
 
@@ -196,28 +267,3 @@ int* load_data(char user_route[2][512]){
     }
 }
 
-
-// int* load_data(char const *DATA){
-//     char line[MAX_LINE];
-//     //Intialising file pointer.
-//     FILE *fp = fopen(DATA, "r");
-//     if(fp == NULL){
-//         printf("An Error Occured while trying to load train database.\n");
-//         return NULL;
-//     }else{
-//         printf("File Found\n");
-//     }
-
-//     char *token = strtok(line, ",");
-//     while (fgets(line, MAX_LINE,fp))
-//     {
-//         char *token = strtok(line, ",");
-//         while(token){
-//             token = strtok(NULL,",");
-//             printf("%s\n", token);
-//             break;
-//         }
-//     }
-//     printf("----------END OF FILE----------");
-//     fclose(fp);
-// }
