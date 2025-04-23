@@ -1,0 +1,16 @@
+#ifndef PROCESS_H
+#define PROCESS_H
+//Function prototypes for processing data
+
+int* load_data(char user_route[2][512]);        //* Opens filestream and loads data from the database about train information;
+int show_initial_display();
+void show_avalaible_routes();
+FILE *load_file();
+void get_booking_data(char data[2][512]);
+void clear_buffer();
+int get_train_num();
+int* begin_booking(int train_num);
+int load_price(int train_num);
+int finalize_booking(struct user_booking_information*);
+
+#endif
