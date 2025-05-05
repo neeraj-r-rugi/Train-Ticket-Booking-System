@@ -1,18 +1,19 @@
 #ifndef DEFINES_H
 #define DEFINES_H
 
+//Header File Inclusions
 #include<stdio.h>
 #include<stdlib.h>
 #include<stdbool.h>
 #include<string.h>
-#include <time.h>
+#include<time.h>
 #include<ctype.h>
 
+//Macro Definitions
 #define DATA_PATH ".\\data\\train_data.csv"
 #define BOOKING_DATA_PATH ".\\data\\user_bookings.csv"
 #define SEAT_DATA_PATH ".\\data\\seat_count.csv"
 #define TEMP_PATH ".\\data\\temp.csv"
-//Program Definitions
 
 //Maxmimum characters a single line can be raed from in the .csv file.
 extern const short int MAX_LINE;

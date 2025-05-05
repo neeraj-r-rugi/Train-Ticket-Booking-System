@@ -1,7 +1,16 @@
 /*
-    *Team SRN(s): CS311, CS310, CS231, EC140
-    *Project: Train Ticket Booking System
-    *Type: Terminal Based Executable
+
+    @authors: Neeraj R Rugi, Neel Chandrakar, Joshua Jaison, K Devi Sai Charan
+    @Team members SRN's: PES2UG24CS311, PES2UG24CS310, PES2UG24CS231, PES2UG24EC140
+    @Project Name: Train Ticket Booking System
+    @Type: Terminal Based Executable
+    @brief: A terminal based train ticket booking system emulator.
+
+    The team would like to express our sincere gratitude to our Professor Pranjali mam
+    for their invaluable guidance, support, and encouragement throughout the course of this project. 
+    Their insightful feedback, patience, and expertise were instrumental in helping us navigate
+    challenges and deepen our understanding of the subject matter. 
+    This mini project would not have been possible without their generous assistance.
 */
 
 #include "defines.h"
