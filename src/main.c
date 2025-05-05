@@ -29,6 +29,9 @@ int main(){
         user_choice = show_initial_display();
         switch (user_choice)
         {
+        case 5:
+            current_state = cancel_booking;
+            break;
         case 4:
             printf("Thank you for Visiting!\n");
             return 0;
@@ -44,6 +47,14 @@ int main(){
             break;
         default:
             break;
+        }
+        if(current_state == cancel_booking){
+            int id;
+            printf("Enter the booking id you want to cancel\n");
+            scanf("%d", &id);
+            printf("--%d\n", id);
+            delete_ticket(id);
+            current_state = intial_display;
         }
 
         if(current_state == show_reservation){

@@ -3,6 +3,32 @@
 
 //#define MAX_FIELD_LEN 100
 
+void delete_ticket(int id){
+    FILE *fp_in = fopen(BOOKING_DATA_PATH, "r");
+    FILE *fp_out = fopen(TEMP_PATH, "w");
+    if (!fp_in || !fp_out) {
+        printf("Could Not Load Seat Database\n");
+        kill_program();
+    }
+    char line[512];
+    while (fgets(line, sizeof(line), fp_in)) {
+        char line_copy[512];
+        strcpy(line_copy, line);
+        char *token = strtok(line_copy, ",");
+        if (id != atoi(token)) {
+            fputs(line, fp_out);
+        }else{
+            printf("Booking Deleted!\n");
+            break;
+        }
+    }
+    fclose(fp_in);
+    fclose(fp_out);
+    remove(BOOKING_DATA_PATH);
+    rename(TEMP_PATH, BOOKING_DATA_PATH);
+}
+
+
 void update_seat_count(int train_num, int no_of_passangers){
     FILE *fp_in = fopen(SEAT_DATA_PATH, "r");
     FILE *fp_out = fopen(TEMP_PATH, "w");
@@ -258,13 +284,14 @@ int show_initial_display(){
         printf("Type 2: To book tickets\n");
         printf("Type 3: To see your reservations\n");
         printf("Type 4: To Terminate the program\n");
+        printf("Type 5: To Cancel a booking\n");
         char temp[1];
     
         printf("You Choose: ");
         scanf("%s", temp);
         printf("\n");
         choice = atoi(temp);
-        if(choice < 1 || choice > 4){
+        if(choice < 1 || choice > 5){
             printf("Invalid Choice, Please Choose again.\n\n");\
             clear_buffer();
         }else{

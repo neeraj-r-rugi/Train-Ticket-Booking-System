@@ -85,6 +85,11 @@ int get_seat_count(int);
     @param: an integer of the number of seats booked
 */
 void update_seat_count(int, int);
+/*
+    @brief: This function retrives the train number and deletes the user booking
+    @param: an integer of the train number
+*/
+void delete_ticket(int);
 /******************************************************************************************* */
 
 #endif

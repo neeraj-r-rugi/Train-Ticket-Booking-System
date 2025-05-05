@@ -20,7 +20,7 @@ extern const short int MAX_LINE;
 extern const short int MAX_TICKET_LIMIT;  
 
 //Defines the current state the user booking the ticket is in.
-enum STATE {intial_display, book_tickets, show_routes, show_reservation, process_booking};
+enum STATE {intial_display, book_tickets, show_routes, show_reservation, process_booking, cancel_booking};
 void kill_program();
 struct user_booking_information{
     int train_num;
