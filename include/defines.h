@@ -10,6 +10,8 @@
 
 #define DATA_PATH ".\\data\\train_data.csv"
 #define BOOKING_DATA_PATH ".\\data\\user_bookings.csv"
+#define SEAT_DATA_PATH ".\\data\\seat_count.csv"
+#define TEMP_PATH ".\\data\\temp.csv"
 //Program Definitions
 
 //Maxmimum characters a single line can be raed from in the .csv file.

@@ -3,6 +3,49 @@
 
 //#define MAX_FIELD_LEN 100
 
+void update_seat_count(int train_num, int no_of_passangers){
+    FILE *fp_in = fopen(SEAT_DATA_PATH, "r");
+    FILE *fp_out = fopen(TEMP_PATH, "w");
+    int reduced_seats = (get_seat_count(train_num)) - no_of_passangers;
+    if (!fp_in || !fp_out) {
+        printf("Could Not Load Seat Database\n");
+        kill_program();
+    }
+    char line[64];
+    while (fgets(line, sizeof(line), fp_in)) {
+        char line_copy[64];
+        strcpy(line_copy, line);
+        char *token = strtok(line_copy, ",");
+        if (train_num == atoi(token)) {
+            fprintf(fp_out, "%d,%d,\n", train_num, reduced_seats);
+        }else{
+            fputs(line, fp_out);
+        }
+    }
+    fclose(fp_in);
+    fclose(fp_out);
+    remove(SEAT_DATA_PATH);
+    rename(TEMP_PATH, SEAT_DATA_PATH);
+}
+
+int get_seat_count(int train_num){
+    char line[64];
+    FILE *fp = fopen(SEAT_DATA_PATH, "r");
+    if(fp == NULL){
+        printf("An Error Occured while trying to seat train database.\n");
+        kill_program();
+    }
+    while(fgets(line, 64, fp)){
+        char * token = strtok(line, ",");
+        if(train_num == atoi(token)){
+            token = strtok(NULL, ",");
+            fclose(fp);
+            return atoi(token);
+        }
+    }
+
+}
+
 void get_date(struct user_booking_information * info){
     int i;
     printf("Enter the date: of your journey in the format: 'DD-MM-YYYY': \n");
@@ -65,7 +108,7 @@ int generate_booking_id(){
     return (rand() % 90000 + 10000);
 }
 
-int finalize_booking(const struct user_booking_information* info){
+int finalize_booking(const struct user_booking_information * info){
     FILE *fp = fopen(BOOKING_DATA_PATH, "a");
     if (fp == NULL) {
         printf("Failed to Book Ticket!\n");
@@ -112,11 +155,12 @@ int load_price(int train_num){
     return price;
 }
 
-int* begin_booking(int train_num){
+int * begin_booking(int train_num){
     
     printf("NOTE: For security reasons you can only book a maximum of 6 tickets per booking\n");
     int no_of_passangers = 0;
     int* p = (int*)malloc(2 * sizeof(int));
+    int no_of_seats = get_seat_count(train_num);
     while(true){
         printf("Please enter the number of travellers you are booking for or -1 if you want to cancel booking\n");
         printf("Your Choice: ");
@@ -128,8 +172,12 @@ int* begin_booking(int train_num){
         }
         if(no_of_passangers <= MAX_TICKET_LIMIT && no_of_passangers >= 1){
             //printf("YES\n");
-            break;
-        
+            if(no_of_passangers <= no_of_seats){
+                break;
+            }
+            else{
+                printf("Required no. Seats Not Avalaible, Please reduce no. of passengers or cancel the booking\n");
+            }
         }else{
             printf("Inavalid no. of Passangers please try again: \n");
         }
@@ -183,15 +231,18 @@ void show_avalaible_routes(){
     printf("Our routes are: \n");
     while (fgets(line, MAX_LINE,fp))
     {
+        int train_num;
         char *token = strtok(line, ",");
         printf("No.: %s|| ", token);
+        train_num = atoi(token);
         token = strtok(NULL, ",");
         printf("From: %s", token);
         token = strtok(NULL, ",");
         printf(" ------------> ");
         printf("To: %s ", token);
         token = strtok(NULL,",");
-        printf("Price: %s\n", token);
+        printf("Price: %s ", token);
+        printf("Seats left: %d\n", get_seat_count(train_num));
     }
     printf("Press any key to continue...\n");
     clear_buffer();
@@ -226,7 +277,7 @@ int show_initial_display(){
 }
 
 
-int* load_data(char user_route[2][512]){
+int * load_data(char user_route[2][512]){
     char line[MAX_LINE];
     //Intialising file pointer.
     int temp;

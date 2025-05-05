@@ -59,7 +59,7 @@ int main(){
                 printf("The Trains you can take are: \n\n");
                 printf("-----------------------------------------------\n");
                 for(int i = 0; train_nums[i] != -1; i++){
-                    printf("Train no.: %d, Price: %d\n", train_nums[i], load_price(train_nums[i]));
+                    printf("Train no.: %d, Price: %d, Seats Left: %d\n", train_nums[i], load_price(train_nums[i]), get_seat_count(train_nums[i]));
                 }
                 printf("-----------------------------------------------\n");
                 user_train_num = get_train_num();
@@ -104,6 +104,7 @@ int main(){
             printf("Your Booking is Complete!\n");
             printf("Your booking id is: %d\n", id);
             printf("Press any key to continue.....\n");
+            update_seat_count(booking_info.train_num, booking_info.no_of_passangers);
             clear_buffer();
             getchar();
 
