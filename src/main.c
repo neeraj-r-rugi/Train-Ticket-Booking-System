@@ -85,6 +85,7 @@ int main(){
 
         if(current_state == process_booking){
             booking_data = (int*)begin_booking(user_train_num);
+            get_date(&booking_info);
             printf("Total no. of berths booked: %d", booking_data[0]);
             printf("\nTotal Price: %d\n", booking_data[1]);
             printf("Press Enter to continue...\n");

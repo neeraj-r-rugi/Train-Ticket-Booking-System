@@ -25,6 +25,7 @@ struct user_booking_information{
     int no_of_passangers;
     char source[512];
     char destination[512];
+    char date[128];
 
 };
 #endif

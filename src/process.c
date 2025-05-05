@@ -3,6 +3,16 @@
 
 //#define MAX_FIELD_LEN 100
 
+void get_date(struct user_booking_information * info){
+    int i;
+    printf("Enter the date: of your journey in the format: 'DD-MM-YYYY': \n");
+    clear_buffer();
+    fgets(info->date, 128, stdin);
+    for(i = 0; info->date[i] != '\n'; i++);
+    info->date[i] = '\0';
+
+}
+
 void to_upper(char str[512]){
     for (int i = 0; str[i] != '\0'; i++) {
         str[i] = toupper(str[i]);  // Converts each character to uppercase
@@ -37,6 +47,9 @@ void show_user_reservations(){
         token = strtok(NULL, ",");
 
         printf("Total Price: %d\n", atoi(token));
+        token = strtok(NULL, ",");
+
+        printf("Journey date: %s\n", token);
         token = strtok(NULL, ",");
         printf("-----------------------------------------------\n\n");
     }
@@ -73,7 +86,7 @@ int finalize_booking(const struct user_booking_information* info){
     strcpy(destination, temp);
 
     //printf("--%d\n", info->train_num);
-    fprintf(fp, "%d,%s,%s,%d,%d,%d,\n", booking_id,source, destination, info->train_num, info->no_of_passangers, info->price);
+    fprintf(fp, "%d,%s,%s,%d,%d,%d,%s,\n", booking_id,source, destination, info->train_num, info->no_of_passangers, info->price, info->date);
     fclose(fp);
     return booking_id;
 

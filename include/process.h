@@ -15,5 +15,6 @@ int finalize_booking(const struct user_booking_information*);
 int generate_booking_id();
 void show_user_reservations();
 void to_upper(char*);
+void get_date(struct user_booking_information *);
 
 #endif
