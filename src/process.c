@@ -19,7 +19,6 @@ void delete_ticket(int id){
             fputs(line, fp_out);
         }else{
             printf("Booking Deleted!\n");
-            break;
         }
     }
     fclose(fp_in);

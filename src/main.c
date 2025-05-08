@@ -52,7 +52,6 @@ int main(){
             int id;
             printf("Enter the booking id you want to cancel\n");
             scanf("%d", &id);
-            printf("--%d\n", id);
             delete_ticket(id);
             current_state = intial_display;
         }
@@ -110,7 +109,7 @@ int main(){
             printf("\nTotal Price: %d\n", booking_data[1]);
             printf("Press Enter to continue...\n");
             clear_buffer();
-            getchar();
+            //getchar();
 
             booking_info.price = booking_data[1];
             booking_info.no_of_passangers = booking_data[0];
@@ -126,7 +125,7 @@ int main(){
             printf("Press any key to continue.....\n");
             update_seat_count(booking_info.train_num, booking_info.no_of_passangers);
             clear_buffer();
-            getchar();
+            //getchar();
 
         }
 
