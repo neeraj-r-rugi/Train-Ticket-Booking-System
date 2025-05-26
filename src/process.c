@@ -4,6 +4,7 @@
 //#define MAX_FIELD_LEN 100
 
 void delete_ticket(int id){
+    bool booking_found = false;
     FILE *fp_in = fopen(BOOKING_DATA_PATH, "r");
     FILE *fp_out = fopen(TEMP_PATH, "w");
     if (!fp_in || !fp_out) {
@@ -19,12 +20,16 @@ void delete_ticket(int id){
             fputs(line, fp_out);
         }else{
             printf("Booking Deleted!\n");
+            booking_found = true;
         }
     }
     fclose(fp_in);
     fclose(fp_out);
     remove(BOOKING_DATA_PATH);
     rename(TEMP_PATH, BOOKING_DATA_PATH);
+    if(!booking_found){
+        printf("No Booking ID Found\n");
+    }
 }
 
 
@@ -119,6 +124,8 @@ void show_user_reservations(){
 
         printf("Journey date: %s\n", token);
         token = strtok(NULL, ",");
+        printf("Booking date: %s\n", token);
+        token = strtok(NULL, ",");
         printf("-----------------------------------------------\n\n");
     }
     printf("Press Enter to continue...\n");
@@ -154,7 +161,7 @@ int finalize_booking(const struct user_booking_information * info){
     strcpy(destination, temp);
 
     //printf("--%d\n", info->train_num);
-    fprintf(fp, "%d,%s,%s,%d,%d,%d,%s,\n", booking_id,source, destination, info->train_num, info->no_of_passangers, info->price, info->date);
+    fprintf(fp, "%d,%s,%s,%d,%d,%d,%s,%s,\n", booking_id,source, destination, info->train_num, info->no_of_passangers, info->price, info->date,__DATE__);
     fclose(fp);
     return booking_id;
 
@@ -284,11 +291,12 @@ int show_initial_display(){
         printf("Type 3: To see your reservations\n");
         printf("Type 4: To Terminate the program\n");
         printf("Type 5: To Cancel a booking\n");
-        char temp[1];
+        char temp[2];
     
         printf("You Choose: ");
-        scanf("%s", temp);
+        scanf("%c", temp);
         printf("\n");
+	temp[1] = '\0';
         choice = atoi(temp);
         if(choice < 1 || choice > 5){
             printf("Invalid Choice, Please Choose again.\n\n");\

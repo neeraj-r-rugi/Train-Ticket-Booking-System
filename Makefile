@@ -1,10 +1,10 @@
 CC = gcc
 CFLAGS = -Iinclude
-SRC = src\main.c src\process.c src\defines.c
-OUT = program.exe
+SRC = src/main.c src/process.c src/defines.c
+OUT = program.out
 
 all:
 	${CC} ${SRC} -o ${OUT} ${CFLAGS}
 
 clean: 
-	del /Q *.exe
+	rm -f $(OUT)

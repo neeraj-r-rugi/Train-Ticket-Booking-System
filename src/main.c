@@ -17,6 +17,14 @@
 #include "process.h"
 
 int main(){
+    printf("▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀\n");
+    printf("██████ ██████ ██████  ███████\n");
+    printf("  ██     ██   ██   ██ ██\n");
+    printf("  ██     ██   ██████  ███████\n");
+    printf("  ██     ██   ██   ██      ██\n");
+    printf("  ██     ██   ██████  ███████\n");
+    printf("▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄\n");
+    printf("\n");
     enum STATE current_state = intial_display;
     int user_choice;
     int* train_nums;
@@ -54,6 +62,7 @@ int main(){
             scanf("%d", &id);
             delete_ticket(id);
             current_state = intial_display;
+            getchar();
         }
 
         if(current_state == show_reservation){
