@@ -23,7 +23,7 @@ void show_avalaible_routes();
     @brief: This function returns a file pointer pointing to the file containing the train data.
     @param: A 2-D array containg sorce and destination
 */
-FILE *load_file();
+FILE * load_file();
 /*
     @brief: This function prompts the user to input source and destination and copies the same into the parameter passed
     @param: AA 2-D array where users choice of source and destination is copied

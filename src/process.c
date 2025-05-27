@@ -19,7 +19,7 @@ void delete_ticket(int id){
         if (id != atoi(token)) {
             fputs(line, fp_out);
         }else{
-            printf("Booking Deleted!\n");
+            printf("Booking Deleted!\n\n");
             booking_found = true;
         }
     }
@@ -124,6 +124,7 @@ void show_user_reservations(){
 
         printf("Journey date: %s\n", token);
         token = strtok(NULL, ",");
+        
         printf("Booking date: %s\n", token);
         token = strtok(NULL, ",");
         printf("-----------------------------------------------\n\n");

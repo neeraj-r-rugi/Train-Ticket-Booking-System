@@ -15,6 +15,7 @@
 #define SEAT_DATA_PATH "./data/seat_count.csv"
 #define TEMP_PATH "./data/temp.csv"
 
+
 //Maxmimum characters a single line can be raed from in the .csv file.
 extern const short int MAX_LINE;
 extern const short int MAX_TICKET_LIMIT;  

@@ -7,16 +7,18 @@
     @brief: A terminal based train ticket booking system emulator.
 
     The team would like to express our sincere gratitude to our Professor Pranjali mam
-    for their invaluable guidance, support, and encouragement throughout the course of this project. 
+    for their invaluable guidance, support, and encouragement throughout the course of this project.
     Their insightful feedback, patience, and expertise were instrumental in helping us navigate
-    challenges and deepen our understanding of the subject matter. 
+    challenges and deepen our understanding of the subject matter.
     This mini project would not have been possible without their generous assistance.
 */
 
 #include "defines.h"
 #include "process.h"
 
-int main(){
+int main()
+{
+    printf("\n");
     printf("▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀\n");
     printf("██████ ██████ ██████  ███████\n");
     printf("  ██     ██   ██   ██ ██\n");
@@ -25,14 +27,20 @@ int main(){
     printf("  ██     ██   ██████  ███████\n");
     printf("▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄\n");
     printf("\n");
+#ifdef __WIN32
+    printf("Logged in using Windows Type Machine\n");
+#else
+    printf("Logged in using UNIX Like Machine\n\n-----------------\n");
+#endif
     enum STATE current_state = intial_display;
     int user_choice;
-    int* train_nums;
     int user_train_num;
-    int* booking_data;
+    int *train_nums;
+    int *booking_data;
     char user_route[2][512];
     struct user_booking_information booking_info;
-    while(true){
+    while (true)
+    {
         current_state = intial_display;
         user_choice = show_initial_display();
         switch (user_choice)
@@ -41,7 +49,13 @@ int main(){
             current_state = cancel_booking;
             break;
         case 4:
-            printf("Thank you for Visiting!\n");
+            printf("\n");
+            printf("  ╔═══════════════════════════════╗\n");
+            printf("  ║                               ║\n");
+            printf("  ║     Thank you for Visiting    ║\n");
+            printf("  ║                               ║\n");
+            printf("  ╚═══════════════════════════════╝\n");
+            printf("\n");
             return 0;
             break;
         case 3:
@@ -56,7 +70,8 @@ int main(){
         default:
             break;
         }
-        if(current_state == cancel_booking){
+        if (current_state == cancel_booking)
+        {
             int id;
             printf("Enter the booking id you want to cancel\n");
             scanf("%d", &id);
@@ -65,60 +80,72 @@ int main(){
             getchar();
         }
 
-        if(current_state == show_reservation){
+        if (current_state == show_reservation)
+        {
             show_user_reservations();
             current_state = intial_display;
         }
 
-        if(current_state == show_routes){
+        if (current_state == show_routes)
+        {
             show_avalaible_routes();
             current_state = intial_display;
         }
 
-        if(current_state == book_tickets){
-            //char user_route[2][512];
+        if (current_state == book_tickets)
+        {
+            // char user_route[2][512];
             get_booking_data(user_route);
-            //printf("The User Choose: \n%s\n%s", user_route[0], user_route[1]);
-            train_nums = (int*)load_data(user_route);
-            if(!train_nums){
+            // printf("The User Choose: \n%s\n%s", user_route[0], user_route[1]);
+            train_nums = (int *)load_data(user_route);
+            if (!train_nums)
+            {
                 printf("No Trains found between your routes!\n");
                 current_state = intial_display;
-            }else{
+            }
+            else
+            {
                 printf("The Trains you can take are: \n\n");
                 printf("-----------------------------------------------\n");
-                for(int i = 0; train_nums[i] != -1; i++){
+                for (int i = 0; train_nums[i] != -1; i++)
+                {
                     printf("Train no.: %d, Price: %d, Seats Left: %d\n", train_nums[i], load_price(train_nums[i]), get_seat_count(train_nums[i]));
                 }
                 printf("-----------------------------------------------\n");
                 user_train_num = get_train_num();
-                for(int i = 0; train_nums[i] != -1; i++){
-                    if(train_nums[i] == user_train_num){
+                for (int i = 0; train_nums[i] != -1; i++)
+                {
+                    if (train_nums[i] == user_train_num)
+                    {
                         current_state = process_booking;
                         break;
                     }
-                } 
-                if(current_state == process_booking){
+                }
+                if (current_state == process_booking)
+                {
                     printf("Procedding with booking\n");
                     printf("You will be booked into the train: %d\n", user_train_num);
                     printf("Press Enter to continue...\n");
                     clear_buffer();
                     getchar();
-                }else{
+                }
+                else
+                {
                     current_state = intial_display;
                     printf("No such train number exists, restarting booking process...\n");
                 }
             }
         }
 
-
-        if(current_state == process_booking){
-            booking_data = (int*)begin_booking(user_train_num);
+        if (current_state == process_booking)
+        {
+            booking_data = (int *)begin_booking(user_train_num);
             get_date(&booking_info);
             printf("Total no. of berths booked: %d", booking_data[0]);
             printf("\nTotal Price: %d\n", booking_data[1]);
             printf("Press Enter to continue...\n");
             clear_buffer();
-            //getchar();
+            // getchar();
 
             booking_info.price = booking_data[1];
             booking_info.no_of_passangers = booking_data[0];
@@ -134,13 +161,12 @@ int main(){
             printf("Press any key to continue.....\n");
             update_seat_count(booking_info.train_num, booking_info.no_of_passangers);
             clear_buffer();
-            //getchar();
-
+            // getchar();
         }
-
-
     }
-    free(booking_data); booking_data = NULL;
-    free(train_nums);train_nums = NULL;
+    free(booking_data);
+    booking_data = NULL;
+    free(train_nums);
+    train_nums = NULL;
     return 0;
 }
