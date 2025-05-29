@@ -300,7 +300,7 @@ int show_initial_display(){
 	temp[1] = '\0';
         choice = atoi(temp);
         if(choice < 1 || choice > 5){
-            printf("Invalid Choice, Please Choose again.\n\n");\
+            printf("Invalid Choice, Please Choose again.Press Enter to continue\n\n");\
             clear_buffer();
         }else{
     
